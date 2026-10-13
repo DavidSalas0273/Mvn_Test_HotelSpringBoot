@@ -60,4 +60,24 @@ class ClienteTest {
                 () -> new Cliente("", "correo@hotel.com"),
                 "Nombre vacío debe lanzar IllegalArgumentException");
     }
+
+    // ──────────────────────────────────────────────────────────────
+    // Prueba 6: dos penalizaciones no deben desactivar al cliente
+    // ──────────────────────────────────────────────────────────────
+    @Test
+    @DisplayName("Dos penalizaciones no deben desactivar al cliente")
+    void dosPenalizacionesNoDebenDesactivarCliente() {
+        // Arrange
+        Cliente cliente = new Cliente("Mario Torres", "mario@hotel.com");
+
+        // Act
+        cliente.registrarPenalizacion(); // 1
+        cliente.registrarPenalizacion(); // 2
+
+        // Assert
+        assertTrue(cliente.isActivo(),
+                "Con solo 2 penalizaciones el cliente debe seguir activo");
+        assertEquals(2, cliente.getPenalizaciones());
+        assertTrue(cliente.puedeRealizarReservas());
+    }
 }
